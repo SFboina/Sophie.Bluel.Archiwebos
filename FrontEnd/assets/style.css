@@ -125,6 +125,22 @@ li:hover {
 	text-align: center;
 	margin-bottom: 1em;
 }
+
+button{
+	font-family: 'Syne';
+	font-weight: 700;
+	background: white;
+	border-radius: 60px;
+	text-align: center;
+	border: 1px solid #1D6154;
+	color:#1D6154;
+	width: 180px;
+	height: 37px;
+}
+button:hover {
+	background:#1D6154 ;
+	color: white;
+}
 .gallery {
 	width: 100%;
 	display: grid;
@@ -169,15 +185,43 @@ margin: auto;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
 
-input[type="submit"]{
+button[type="submit"]{
 	font-family: 'Syne';
 	font-weight: 700;
 	color: white;
 	background-color: #1D6154;
 	margin : 2em auto ;
-	width: 180px;
+	width: 179px;
 	text-align: center;
 	border-radius: 60px ;
+}
+.login h2 {
+	margin-bottom: 20px;
+	font-family: 'Syne';
+}
+.login input {
+	height: 50px;
+	font-size: 1.2em;
+	border: none;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+}	
+.login form {
+	text-align: left;
+	margin-top:30px;
+	display: flex;
+	flex-direction: column;
+}
+.login {
+	width: 50%;
+	margin: auto;
+}
+
+.login >* {
+	text-align: center;
+}
+
+.login a {
+	text-align: center;
 }
 
 footer nav ul {
@@ -186,3 +230,35 @@ footer nav ul {
 	margin: 2em
 }
 
+.container-modal {
+	background-color: #ffffff;
+	width: 40%;
+	height: 40%;
+}
+.overlay {
+	background-color: rgba(0, 0, 0, 0.384);
+	height: 100%;
+	width: 100%;
+	position: fixed;
+	top: 0;
+	z-index: 100;
+	justify-content: center;
+	align-items: center;
+	display: none;
+
+}
+
+h3 {
+	text-align: center;
+}
+
+.open-modal{
+	color: #000000;
+	font-size: 14px;
+	font-weight: 400;
+}
+.fa-pen-to-square {
+	color: #000000;
+	font-size: 14px;
+	font-weight: 400;
+}
