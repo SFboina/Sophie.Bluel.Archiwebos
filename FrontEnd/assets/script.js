@@ -65,7 +65,7 @@ const displayWorks = (works) => {
 };
 
 const buttonAll= document.querySelector("#All");
-// Ajouter un écouteur d'événement click au bouton Tous
+// Ajouter un écouteur d'événement click au bouton 
 buttonAll.addEventListener("click", function () {
   // Afficher tous les travaux sans les filtrer
   displayWorks(allWorks);
@@ -73,8 +73,25 @@ buttonAll.addEventListener("click", function () {
 
 const modification= document.querySelector('.open-modal');
 modification.addEventListener("click", () => {
-  // pour modifier la modale
+  // pour acceder à la modale
   document.querySelector('.overlay').style.display = 'flex'
+// Définir une fonction pour afficher les travaux dans la modale
+const displayWorks = (works) => {
+  // Sélectionner l'élément qui contient la modale
+  const modal = document.querySelector(".overlay");
+  // Vider la modale avant d'afficher les projets
+  modal.innerHTML = "";
+  // Parcourir le tableau des projets
+  works.forEach((work) => {
+    // Créer un élément div pour le projet
+    const div = document.createElement("div");
+    // Ajouter le titre et l'image du projet 
+    div.innerHTML = `<h3>${work.title}</h3><img src="${work.imageUrl}" alt="${work.title}">`;
+    // Ajouter le div à la modale
+    modal.appendChild(div);  
+  });
+};
+displayWorks(allWorks);
 });
 
 const close= document.querySelector('.fa-xmark');
