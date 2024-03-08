@@ -37,7 +37,8 @@ const errorMessage=document.querySelector(".login p");
     .then(response => response.json()) // Convertir la réponse en JSON
     .then(data => {
         console.log(data)
-        localStorage.token=token.data
+        localStorage.token=data.token
+        window.location.href = "./index.html";
     }) // Afficher les données reçues
     .catch(error => console.error(error)); // Gérer les erreurs éventuelles
 

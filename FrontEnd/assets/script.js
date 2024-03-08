@@ -1,6 +1,7 @@
 const filter = document.querySelector(".filter");
 
 let allWorks = [];
+let categories = [];
 const getWorks = async () => {
   const res = await fetch("http://localhost:5678/api/works");
   const data = await res.json();
@@ -14,7 +15,7 @@ const getCategories = async () => {
   const res2 = await fetch("http://localhost:5678/api/categories");
   const result = await res2.json();
   console.log(result);
-  const categories = result;
+  let categories = result;
   
   categories.forEach((category) => {
     // Créer un élément bouton
@@ -35,12 +36,15 @@ const getCategories = async () => {
       // Afficher les travaux filtrés
       displayWorks(worksByCategory);
     });
+    // on ajoute au select les categories
+    document.getElementById('category').innerHTML += `<option value="${category.id}">${category.name}</option>`;
   });
 };
 getCategories();
 
 const displayWorks = (works) => {
   const gallery = document.querySelector(".gallery");
+  gallery.innerHTML = "";
   console.log(gallery);
   console.log(works);
   // Vider la galerie avant d'afficher les travaux filtrés
@@ -72,26 +76,41 @@ buttonAll.addEventListener("click", function () {
 });
 
 const modification= document.querySelector('.open-modal');
+// Définir une fonction pour afficher les travaux dans la modale
+const displayWorksInGallery = (works) => {
+  // Sélectionner l'élément qui contient la gallery
+  const gallery = document.querySelector(".overlay .content-gallery");
+  
+  // Vider la gallery avant d'afficher les projets
+  gallery.innerHTML = "";
+  // Parcourir le tableau des projets
+  works.forEach((work) => {
+    // Création élément div pour le projet
+    console.log(work)
+    const div = document.createElement("div");
+    // Ajout de l'image du projet 
+    div.innerHTML = `
+        <span id="${work.id}" class="btn-delete">
+          <i class="fa-solid fa-trash-can"></i>
+        </span>
+        <img src="${work.imageUrl}" alt="${work.title}">
+    `;// Sélectionner tous les éléments i avec la classe fa-trash
+    
+    // Ajouter le div à la gallery
+    gallery.appendChild(div);  
+  });
+};
 modification.addEventListener("click", () => {
   // pour acceder à la modale
   document.querySelector('.overlay').style.display = 'flex'
-// Définir une fonction pour afficher les travaux dans la modale
-const displayWorks = (works) => {
-  // Sélectionner l'élément qui contient la modale
-  const modal = document.querySelector(".overlay");
-  // Vider la modale avant d'afficher les projets
-  modal.innerHTML = "";
-  // Parcourir le tableau des projets
-  works.forEach((work) => {
-    // Créer un élément div pour le projet
-    const div = document.createElement("div");
-    // Ajouter le titre et l'image du projet 
-    div.innerHTML = `<h3>${work.title}</h3><img src="${work.imageUrl}" alt="${work.title}">`;
-    // Ajouter le div à la modale
-    modal.appendChild(div);  
-  });
-};
-displayWorks(allWorks);
+displayWorksInGallery(allWorks);
+const trashIcons = document.querySelectorAll(".btn-delete");
+    // Ajouter un écouteur d'événement click sur chaque icône
+    trashIcons.forEach((icon) => {
+      icon.addEventListener("click", () => {
+        deleteWork(icon.id);
+      });
+    });
 });
 
 const close= document.querySelector('.fa-xmark');
@@ -99,42 +118,163 @@ close.addEventListener("click", () => {
   //fermeture de la modale
 document.querySelector('.overlay').style.display = 'none'
 });
+function removeWork(event) {
+  // Récupérer l'id du travail à supprimer
+  let workId = event.target.id;
+  // Filtrer le tableau allWorks
+  allWorks = allWorks.filter(work => work.id != workId);
+  // Appeler la fonction displayWorks
+  displayWorksInGallery(allWorks);
+};
 
-fetch("http://localhost:5678/api/works/1", {
-  method: "DELETE",
-  headers: {
-    accept: "*/*",
-  },
-})
-  .then((response) => {
-    // Traiter la réponse
-    console.log(response);
+const buttonAdd = document.querySelector(".unlock-modal");
+const modalAddPhoto = document.querySelector(".modal-add-photo");
+const modalGallery = document.querySelector(".modal-gallery");
+const buttonBack = document.querySelector(".fa-arrow-left");
+const closeSecond = document.querySelector(".add-picture .fa-xmark");
+// Ajouter un écouteur d'événement click sur l'élément
+closeSecond.addEventListener("click", function () {
+  document.querySelector('.overlay').style.display = 'none'
+});
+
+// Ajouter un click sur le bouton
+buttonAdd.addEventListener("click", function () {
+  
+  modalAddPhoto.style.display = 'block'
+  modalGallery.style.display = 'none'
+});
+
+buttonBack.addEventListener("click", function () {
+  modalAddPhoto.style.display = 'none'
+  modalGallery.style.display = 'block'
+});
+
+const deleteWork = (id) => {
+  fetch(`http://localhost:5678/api/works/${id}`, {
+    method: "DELETE",
+    headers: {
+      accept: "*/*",
+      Authorization:
+          `Bearer ${localStorage.token}`,
+    },
   })
-  .catch((error) => {
-    // Gérer l'erreur
-    console.error(error);
-  });
+    .then((response) => {
+      // Traiter la réponse
+      console.log(response);
+      if(response.status < 400){
+        // supprimer la photo de allWorks
+        allWorks = allWorks.filter((work) => work.id != id);
+        displayWorks(allWorks);
+        displayWorksInGallery(allWorks);
+      } else {
+        // redict à la page login
+        alert('Vous devez vous connecter pour supprimer une photo')
+        window.location.href = 'connexion.html'
+      }
+    })
+    .catch((error) => {
+      // Gérer l'erreur
+      console.error(error);
+    });
+}
+// Sélectionner les éléments de formulaire avec les id image, name et category
+const imageInput = document.getElementById(".add-picture img");
+const nameInput = document.getElementById(" .add-picture input");
+const categoryInput = document.getElementById(".add-picture label");
+const form = document.querySelector(".form-add");
+// Sélectionner l'élément fa-image
+const faImage = document.querySelector(".fa-regular.fa-image");
 
+// Ajouter un écouteur d'événement click sur l'élément fa-image
+faImage.addEventListener("click", showImage);
+
+// Définir la fonction showImage
+function showImage() {
+  // Récupérer l'URL de l'image choisie dans le formulaire
+  const url = document.getElementById("image").value;
+
+  // Créer un nouvel élément img avec l'URL comme source
+  const img = document.createElement("img");
+  img.src = url;
+
+  // Afficher l'image dans la page
+  document.body.appendChild(img);
+}
+const addWork = () => {
   fetch("http://localhost:5678/api/works", {
     method: "POST",
     headers: {
       accept: "application/json",
       Authorization:
-        "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY1MTg3NDkzOSwiZXhwIjoxNjUxOTYxMzM5fQ.JGN1p8YIfR-M-5eQ-Ypy6Ima5cKA4VbfL2xMr2MgHm4",
-      "Content-Type": "multipart/form-data",
+      `Bearer ${localStorage.token}`,
     },
-    body: new FormData(document.getElementById("form")),
+    body: new FormData(form),
   })
     .then((response) => {
       // Traiter la réponse
       console.log(response);
+      // Convertir la réponse en JSON
+      return response.json();
+    })
+    .then((data) => {
+      // Récupérer le nouvel objet work
+      const newWork = data;
+      // Ajouter le nouvel objet au tableau allWorks
+      allWorks.push(newWork);
+      // Afficher les travaux dans la galerie
+      displayWorks(allWorks);
+      displayWorksInGallery(allWorks);
     })
     .catch((error) => {
       // Gérer l'erreur
       console.error(error);
     });
 
+};
+// Sélectionner l'élément input de type file
+const input = document.getElementById("image");
 
+// Sélectionner l'élément img
+const img = document.querySelector(".add-picture img");
+
+// Ajouter un écouteur d'événement sur l'input
+input.addEventListener("change", function() {
+  // Récupérer le fichier choisi
+  const file = this.files[0];
+
+  // Vérifier que le fichier est bien une image
+  if (file && file.type.match("image.*")) {
+    // Créer une URL temporaire pour l'image
+    const url = URL.createObjectURL(file);
+
+    // Assigner l'URL à la propriété src de l'img
+    img.src = url;
+  }
+});
+// Sélectionner l'élément modal-add-photo
+const modal = document.querySelector(".modal-add-photo");
+
+// Sélectionner l'élément add-picture
+const picture = document.querySelector(".add-picture");
+
+// Sélectionner l'élément img dans la modale
+const modalImg = document.querySelector(".modal-add-photo img");
+
+// Ajouter un écouteur d'événement sur l'élément picture
+picture.addEventListener("click", function() {
+  // Copier l'URL de l'image dans la modale
+  modalImg.src = img.src;
+});
+
+
+
+// Ajouter un écouteur d'événement submit sur le formulaire
+form.addEventListener("submit", function(event) {
+  // Empêcher le comportement par défaut du formulaire
+  event.preventDefault();
+  // Appeler la fonction addWork
+  addWork();
+});
 
 
 

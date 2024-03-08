@@ -40,10 +40,41 @@
 		<h2>Mes Projets <i class="fa-regular fa-pen-to-square"></i><span class="open-modal">modifier</span></h2>
 		<div class="overlay">
 			<div class="container-modal">
-				<i class="fa-solid fa-xmark"></i>
-				<div class="modal"></div>
-				<h3>Galerie photo</h3>
-				<button>Ajouter une photo </button>
+				<div class="modal-gallery">
+					<i class="fa-solid fa-xmark"></i>
+					<div class="modal"></div>
+					<h3>Galerie photo</h3>
+					<!-- on ajoute les images ici-->
+					<div class="content-gallery"></div>
+					<button class="unlock-modal btn-add">Ajouter une photo </button>
+				</div>
+
+				<div class="modal-add-photo">
+					<div class="add-picture">
+						<i class="fa-solid fa-arrow-left"></i>
+						<i class="fa-solid fa-xmark"></i>
+						<h3>Ajout photo</h3>
+						<form class="second-modal form-add">
+							<i class="fa-regular fa-image"></i>
+							<p>jpg,png: 4mo max</p>
+							  <!--  input de type file pour sélectionner l'image -->
+						      <input id="image" type="file" name="image" accept="image/*" required>
+							  <!-- input de type text pour nommer l'image -->
+						      <label for="title">Titre</label>
+							  <input type="text" id="title" name="title">
+							  <!-- élément select pour choisir la catégorie -->
+							  <label for="category">Catégorie</label>
+						<select id="category" name="category">
+								<!-- éléments option pour chaque catégorie disponible -->
+								<!-- <option value="Objets">Objets</option>
+								<option value="Appartements">Appartements</option>
+								<option value="Hotels & restaurants">Hotels & restaurants</option> -->
+							  </select>
+							  <!-- type submit pour envoyer le formulaire -->
+							  <button type="submit">Valider</button>
+						</div>
+						</form>
+				</div>
 				
 			</div>
 		</div>
