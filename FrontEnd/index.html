@@ -60,20 +60,23 @@
 						<i class="fa-solid fa-xmark"></i>
 						<h3>Ajout photo</h3>
 						<form class="second-modal form-add">
-							<i class="fa-regular fa-image"></i>
-							<p>jpg,png: 4mo max</p>
+							<div class="preview">
+								<div>
+									<i class="fa-regular fa-image"></i>
+								</div>
+								<label for="image" class="custom-file-upload">
+									<span id="file-upload-text">+ Ajouter photo</span>
+								</label>
 							  <!--  input de type file pour sélectionner l'image -->
 						      <input id="image" type="file" name="image" accept="image/*" required>
+								<p>jpg,png: 4mo max</p>
+							</div>
 							  <!-- input de type text pour nommer l'image -->
-						      <label for="title">Titre</label>
+						      <label for="title" class="title">Titre</label>
 							  <input type="text" id="title" name="title">
 							  <!-- élément select pour choisir la catégorie -->
-							  <label for="category">Catégorie</label>
+							  <label for="category" class="category">Catégorie</label>
 						<select id="category" name="category">
-								<!-- éléments option pour chaque catégorie disponible -->
-								<!-- <option value="Objets">Objets</option>
-								<option value="Appartements">Appartements</option>
-								<option value="Hotels & restaurants">Hotels & restaurants</option> -->
 							  </select>
 							  <!-- type submit pour envoyer le formulaire -->
 							  <button type="submit">Valider</button>

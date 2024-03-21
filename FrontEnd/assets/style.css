@@ -320,8 +320,6 @@ h3 {
   justify-content: center;
   background-color: #ffffff;
   align-items: center;
-  height: 50%;
-  width: 50%;
 }
 .fa-xmark {
   right: 10px;
@@ -334,4 +332,62 @@ h3 {
 .btn-add {
   background:#1D6154 ;
   color: white;
+}
+
+.preview {
+  text-align: center;
+  width: 100%;
+  background: #E8F1F6;
+  height: 169px;
+}
+
+i.fa-regular.fa-image {
+  font-size: xxx-large;
+  color: #B9C5CC;
+}
+
+.custom-file-upload {
+  display: inline-block;
+  cursor: pointer;
+  margin-top: 13px;
+  padding: 10px 20px;
+  background-color: #f2f2f2;
+  border: none;
+  border-radius: 50px;
+  margin-bottom: 13px;
+  background: #CBD6DC;
+}
+
+.preview input {
+  display: none;
+  width: auto
+}
+
+.preview label {
+  width: auto!important;
+}
+
+
+.add-picture input#title{
+  background: #FFF;
+  box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.09);
+  border: none;
+  padding: 15px;
+  width: 100%;
+  margin-bottom: 10px;
+}
+.add-picture label.title, label.category{
+  color: #3D3D3D;
+  font-size: 14px;
+  font-weight: 500;
+  display: block;
+  margin-bottom: 10px;
+}
+.add-picture select {
+  background: #FFF;
+  box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.09);
+  padding: 15px;
+  padding: 15px;
+  border: none;
+  width: 100%;
 }
