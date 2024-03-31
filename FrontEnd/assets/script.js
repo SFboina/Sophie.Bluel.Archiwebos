@@ -1,5 +1,5 @@
 const filter = document.querySelector(".filter");
-
+const contentInputFile = document.querySelector(".content-input-file");
 let allWorks = [];
 let categories = [];
 const getWorks = async () => {
@@ -33,6 +33,11 @@ const getCategories = async () => {
       let worksByCategory = allWorks.filter(
         (work) => work.category.id == category.id
       );
+      const allButton = document.querySelectorAll(".filter button");
+      allButton.forEach((item) => {
+        item.classList.remove("active");
+      })
+      button.classList.add("active");
       // Afficher les travaux filtrés
       displayWorks(worksByCategory);
     });
@@ -117,6 +122,9 @@ const close= document.querySelector('.fa-xmark');
 close.addEventListener("click", () => {
   //fermeture de la modale
 document.querySelector('.overlay').style.display = 'none'
+  contentInputFile.style.display = "block";
+  imagePreview.src = "";
+  imagePreview.classList.remove("active");
 });
 function removeWork(event) {
   // Récupérer l'id du travail à supprimer
@@ -135,6 +143,10 @@ const closeSecond = document.querySelector(".add-picture .fa-xmark");
 // Ajouter un écouteur d'événement click sur l'élément
 closeSecond.addEventListener("click", function () {
   document.querySelector('.overlay').style.display = 'none'
+  contentInputFile.style.display = "block";
+  imagePreview.src = "";
+  imagePreview.classList.remove("active");
+
 });
 
 // Ajouter un click sur le bouton
@@ -147,6 +159,9 @@ buttonAdd.addEventListener("click", function () {
 buttonBack.addEventListener("click", function () {
   modalAddPhoto.style.display = 'none'
   modalGallery.style.display = 'block'
+  contentInputFile.style.display = "block";
+  imagePreview.src = "";
+  imagePreview.classList.remove("active");
 });
 
 const deleteWork = (id) => {
@@ -266,8 +281,6 @@ picture.addEventListener("click", function() {
   modalImg.src = img.src;
 });
 
-
-
 // Ajouter un écouteur d'événement submit sur le formulaire
 form.addEventListener("submit", function(event) {
   // Empêcher le comportement par défaut du formulaire
@@ -276,5 +289,34 @@ form.addEventListener("submit", function(event) {
   addWork();
 });
 
+//fonction qui retourne 'true' si l'utilisateur est connecté
+console.log(localStorage.token);
+if (localStorage.token) {
+  // Affiche la barre
 
+  document.querySelector('.bar-side').style.display = 'block';
+  document.querySelector('.log').innerHTML = 'Déconnexion';
+  document.querySelector('.log').addEventListener('click', () => {
+    localStorage.clear();
+    window.location.href = 'connexion.html';
+  });
+} else {
+  // Cache la barre
+  document.querySelector('.bar-side').style.display = 'none';
+}
 
+const inputImage = document.getElementById("image");
+const preview = document.querySelector(".preview");
+const imagePreview = preview.querySelector("img");
+inputImage.addEventListener("change", function () {
+  const file = this.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.addEventListener("load", function () {
+      imagePreview.setAttribute("src", reader.result);
+      imagePreview.classList.add("active");
+    });
+    contentInputFile.style.display = "none";
+    reader.readAsDataURL(file);
+  }
+});

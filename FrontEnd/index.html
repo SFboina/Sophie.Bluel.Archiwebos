@@ -12,13 +12,14 @@
 	<link rel="stylesheet" href="./assets/style.css">
 </head>
 <body>
+	<div class="bar-side"> <i class="fa-regular fa-pen-to-square"></i> Mode édition</div>
 <header>
 	<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
 	<nav>
 		<ul>
 			<li>projets</li>
 			<li>contact</li>
-			<li><a href="./connexion.html">login</a></li>
+			<li class="log"><a href="./connexion.html">login</a></li>
 			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
 		</ul>
 	</nav>
@@ -61,15 +62,18 @@
 						<h3>Ajout photo</h3>
 						<form class="second-modal form-add">
 							<div class="preview">
-								<div>
-									<i class="fa-regular fa-image"></i>
+								<img src="" alt="">
+								<div class="content-input-file">
+									<div>
+										<i class="fa-regular fa-image"></i>
+									</div>
+									<label for="image" class="custom-file-upload">
+										<span id="file-upload-text">+ Ajouter photo</span>
+									</label>
+									<!--  input de type file pour sélectionner l'image -->
+										<input id="image" type="file" name="image" accept="image/*" required>
+									<p>jpg,png: 4mo max</p>
 								</div>
-								<label for="image" class="custom-file-upload">
-									<span id="file-upload-text">+ Ajouter photo</span>
-								</label>
-							  <!--  input de type file pour sélectionner l'image -->
-						      <input id="image" type="file" name="image" accept="image/*" required>
-								<p>jpg,png: 4mo max</p>
 							</div>
 							  <!-- input de type text pour nommer l'image -->
 						      <label for="title" class="title">Titre</label>
@@ -88,7 +92,7 @@
 		</div>
 		
 		<div class="filter">
-			<button id="All">Tous</button>
+			<button id="All" class="active">Tous</button>
 		</div>
 		<div class="gallery">
 		</div>
