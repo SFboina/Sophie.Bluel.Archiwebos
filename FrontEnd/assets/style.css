@@ -422,3 +422,9 @@ i.fa-regular.fa-image {
 .log {
   cursor: pointer;
 }
+
+.error {
+  color: red;
+  display: none;
+  text-align: center;
+}

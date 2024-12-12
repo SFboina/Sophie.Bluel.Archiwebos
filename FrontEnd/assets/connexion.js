@@ -12,6 +12,10 @@ form.addEventListener("submit", function(event) {
     // Faire d'autres traitements avec le formulaire
   });
 const errorMessage=document.querySelector(".login p");
+function displayError(message) {
+  errorMessage.textContent = message;
+  errorMessage.style.color = "red";
+}
 
 
 
@@ -34,12 +38,18 @@ const errorMessage=document.querySelector(".login p");
     },
     body: JSON.stringify(user)
   })
-    .then(response => response.json()) // Convertir la réponse en JSON
+    .then(response => {if (!response.ok) { // Si la réponse n'est pas OK, afficher un message d'erreur 
+      return response.json().then(data => {throw new Error(data.message || 'Erreur de connexion'); }); } 
+      return response.json(); 
+    })
     .then(data => {
         console.log(data)
         localStorage.token=data.token
         window.location.href = "./index.html";
     }) // Afficher les données reçues
-    .catch(error => console.error(error)); // Gérer les erreurs éventuelles
+    .catch(error => {
+      const errorMessage = document.querySelector('.error')
+      errorMessage.style.display = 'block'
+    }); // Gérer les erreurs éventuelles
 
 }
