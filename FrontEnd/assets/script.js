@@ -316,9 +316,16 @@ if (localStorage.token) {
     localStorage.clear();
     window.location.href = 'connexion.html';
   });
+  // Affiche l'icône et le bouton "modifier"
+   document.querySelector('.fa-regular.fa-pen-to-square').style.display = 'inline'; 
+   document.querySelector('.open-modal').style.display = 'inline';
 } else {
   // Cache la barre
   document.querySelector('.bar-side').style.display = 'none';
+
+  ; // Cache l'icône et le bouton "modifier"
+   document.querySelector('.fa-regular.fa-pen-to-square').style.display = 'none'; 
+   document.querySelector('.open-modal').style.display = 'none';
 }
 
 const inputImage = document.getElementById("image");
