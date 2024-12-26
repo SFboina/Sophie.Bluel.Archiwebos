@@ -428,3 +428,9 @@ i.fa-regular.fa-image {
   display: none;
   text-align: center;
 }
+
+/* lorsque le btn est desactiver */
+.btn-validate:disabled {
+  background-color: grey;
+  cursor: not-allowe
+}

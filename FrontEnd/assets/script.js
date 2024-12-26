@@ -239,6 +239,7 @@ const addWork = () => {
       // Afficher les travaux dans la galerie
       displayWorks(allWorks);
       displayWorksInGallery(allWorks);
+      closeModal()
     })
     .catch((error) => {
       // Gérer l'erreur
@@ -246,6 +247,8 @@ const addWork = () => {
     });
 
 };
+const inputTitle = document.getElementById('title')
+const selectCategory = document.getElementById('category')
 // Sélectionner l'élément input de type file
 const input = document.getElementById("image");
 
@@ -254,6 +257,7 @@ const img = document.querySelector(".add-picture img");
 
 // Ajouter un écouteur d'événement sur l'input
 input.addEventListener("change", function() {
+  validForm()
   // Récupérer le fichier choisi
   const file = this.files[0];
 
@@ -265,7 +269,19 @@ input.addEventListener("change", function() {
     // Assigner l'URL à la propriété src de l'img
     img.src = url;
   }
-});
+}); 
+inputTitle.addEventListener('input', function(){
+  validForm()
+})
+function validForm() {
+  console.log(inputTitle.value , selectCategory.value , input.files.length)
+  const btnValidate = document.querySelector('.btn-validate')
+  if (inputTitle.value !== '' && input.files.length > 0){
+    btnValidate.removeAttribute('disabled')
+  } else {
+    btnValidate.setAttribute('disabled',true)
+  }
+}
 // Sélectionner l'élément modal-add-photo
 const modal = document.querySelector(".modal-add-photo");
 
@@ -320,3 +336,13 @@ inputImage.addEventListener("change", function () {
     reader.readAsDataURL(file);
   }
 });
+function closeModal() {
+  document.querySelector('.overlay').style.display = 'none'
+  contentInputFile.style.display = "block";
+  imagePreview.src = "";
+  imagePreview.classList.remove("active");
+  input.value = ''
+  inputTitle.value = ''
+  const btnValidate = document.querySelector('.btn-validate')
+  btnValidate.setAttribute('disabled',true)
+}
