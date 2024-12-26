@@ -17,6 +17,10 @@ const getCategories = async () => {
   console.log(result);
   let categories = result;
   
+  // Vérifiez si un token est présent dans le localStorage 
+   if (localStorage.token) { 
+  // Cache les filtres si l'utilisateur n'est pas connecté
+   filter.style.display = 'none'; } else
   categories.forEach((category) => {
     // Créer un élément bouton
     const button = document.createElement("button");
@@ -316,16 +320,9 @@ if (localStorage.token) {
     localStorage.clear();
     window.location.href = 'connexion.html';
   });
-  // Affiche l'icône et le bouton "modifier"
-   document.querySelector('.fa-regular.fa-pen-to-square').style.display = 'inline'; 
-   document.querySelector('.open-modal').style.display = 'inline';
 } else {
   // Cache la barre
   document.querySelector('.bar-side').style.display = 'none';
-
-  ; // Cache l'icône et le bouton "modifier"
-   document.querySelector('.fa-regular.fa-pen-to-square').style.display = 'none'; 
-   document.querySelector('.open-modal').style.display = 'none';
 }
 
 const inputImage = document.getElementById("image");
@@ -351,5 +348,5 @@ function closeModal() {
   input.value = ''
   inputTitle.value = ''
   const btnValidate = document.querySelector('.btn-validate')
-  btnValidate.setAttribute('disabled',true)
+  btnValidate.setAttribute('disabled',)
 }
