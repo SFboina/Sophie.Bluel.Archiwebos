@@ -434,3 +434,13 @@ i.fa-regular.fa-image {
   background-color: grey;
   cursor: not-allowe
 }
+
+.content-icons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.content-btn-validate {
+  display: flex;
+  justify-content: center;
+}

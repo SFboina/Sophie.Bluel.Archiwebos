@@ -16,11 +16,6 @@ const getCategories = async () => {
   const result = await res2.json();
   console.log(result);
   let categories = result;
-  
-  // Vérifiez si un token est présent dans le localStorage 
-   if (localStorage.token) { 
-  // Cache les filtres si l'utilisateur n'est pas connecté
-   filter.style.display = 'none'; } else
   categories.forEach((category) => {
     // Créer un élément bouton
     const button = document.createElement("button");
@@ -48,7 +43,7 @@ const getCategories = async () => {
     // on ajoute au select les categories
     document.getElementById('category').innerHTML += `<option value="${category.id}">${category.name}</option>`;
   });
-};
+}
 getCategories();
 
 const displayWorks = (works) => {
@@ -312,8 +307,9 @@ form.addEventListener("submit", function(event) {
 //fonction qui retourne 'true' si l'utilisateur est connecté
 console.log(localStorage.token);
 if (localStorage.token) {
+  // cacher les filtres
+  filter.style.display = 'none';
   // Affiche la barre
-
   document.querySelector('.bar-side').style.display = 'block';
   document.querySelector('.log').innerHTML = 'Déconnexion';
   document.querySelector('.log').addEventListener('click', () => {
@@ -321,14 +317,14 @@ if (localStorage.token) {
     window.location.href = 'connexion.html';
 
     // Affiche l'icône et le bouton "modifier" 
-    document.querySelector('.fa-regular.fa-pen-to-square').style.display = 'inline'; 
+    document.querySelector('.icon-edit').style.display = 'inline'; 
     document.querySelector('.open-modal').style.display = 'inline';
   });
 } else {
   // Cache la barre
   document.querySelector('.bar-side').style.display = 'none';
   // Cache l'icône et le bouton "modifier" 
-  document.querySelector('.fa-regular.fa-pen-to-square').style.display = 'none'; 
+  document.querySelector('.icon-edit').style.display = 'none'; 
   document.querySelector('.open-modal').style.display = 'none'
 }
 
