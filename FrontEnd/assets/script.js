@@ -204,8 +204,24 @@ faImage.addEventListener("click", showImage);
 
 // Définir la fonction showImage
 function showImage() {
-  // Récupérer l'URL de l'image choisie dans le formulaire
-  const url = document.getElementById("image").value;
+  // Récupérer le fichier choisi dans le formulaire
+  const file = imageInput.files[0];
+  
+  // Vérifier si un fichier a été choisi 
+  if (!file) { alert("Veuillez choisir une image.");
+     return; } 
+     
+  // Vérifier la taille du fichier ( 4 Mo max)
+  if (file.size > 4 * 1024 * 1024) { alert("Le fichier sélectionné est trop volumineux. Veuillez choisir un fichier de moins de 4 Mo."); 
+  return; 
+} 
+  // Vérifier le format du fichier
+   const fileType = file.type;
+   const validImageTypes = ["image/jpeg", "image/png"];
+
+   if (!validImageTypes.includes(fileType)) { alert( "Le fichier sélectionné n'est pas au format jpg ou png. Veuillez choisir un fichier au format jpg ou png."); 
+    return; 
+  }
 
   // Créer un nouvel élément img avec l'URL comme source
   const img = document.createElement("img");
