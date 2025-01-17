@@ -267,20 +267,7 @@ const input = document.getElementById("image");
 const img = document.querySelector(".add-picture img");
 
 // Ajouter un écouteur d'événement sur l'input
-input.addEventListener("change", function() {
-  validForm()
-  // Récupérer le fichier choisi
-  const file = this.files[0];
 
-  // Vérifier que le fichier est bien une image
-  if (file && file.type.match("image.*")) {
-    // Créer une URL temporaire pour l'image
-    const url = URL.createObjectURL(file);
-
-    // Assigner l'URL à la propriété src de l'img
-    img.src = url;
-  }
-}); 
 inputTitle.addEventListener('input', function(){
   validForm()
 })
@@ -343,15 +330,37 @@ const preview = document.querySelector(".preview");
 const imagePreview = preview.querySelector("img");
 inputImage.addEventListener("change", function () {
   const file = this.files[0];
-  if (file) {
-    const reader = new FileReader();
-    reader.addEventListener("load", function () {
-      imagePreview.setAttribute("src", reader.result);
-      imagePreview.classList.add("active");
-    });
-    contentInputFile.style.display = "none";
-    reader.readAsDataURL(file);
+  if (!file) {
+    alert("Aucun fichier sélectionné.");
+    return;
   }
+
+  // Vérifier que le fichier est bien une image JPG ou PNG
+  const allowedTypes = ["image/jpeg", "image/png"];
+  if (!allowedTypes.includes(file.type)) {
+    alert("Seuls les fichiers JPG et PNG sont acceptés.");
+    return;
+  }
+
+  // Vérifier que la taille du fichier est inférieure à 4 Mo
+  const maxSizeInBytes = 4 * 1024 * 1024; // 4 Mo
+  if (file.size > maxSizeInBytes) {
+    alert("Le fichier doit être inférieur à 4 Mo.");
+    return;
+  }
+  // Créer une URL temporaire pour l'image
+  const url = URL.createObjectURL(file);
+
+  // Assigner l'URL à la propriété src de l'img
+  img.src = url;
+  validForm()  
+  const reader = new FileReader();
+  reader.addEventListener("load", function () {
+    imagePreview.setAttribute("src", reader.result);
+    imagePreview.classList.add("active");
+  });
+  contentInputFile.style.display = "none";
+  reader.readAsDataURL(file);
 });
 function closeModal() {
   document.querySelector('.overlay').style.display = 'none'
