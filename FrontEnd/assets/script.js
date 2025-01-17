@@ -5,7 +5,6 @@ let categories = [];
 const getWorks = async () => {
   const res = await fetch("http://localhost:5678/api/works");
   const data = await res.json();
-  console.log(data);
   allWorks = data;
   displayWorks(allWorks);
 };
@@ -14,7 +13,6 @@ getWorks();
 const getCategories = async () => {
   const res2 = await fetch("http://localhost:5678/api/categories");
   const result = await res2.json();
-  console.log(result);
   let categories = result;
   categories.forEach((category) => {
     // Créer un élément bouton
@@ -49,8 +47,7 @@ getCategories();
 const displayWorks = (works) => {
   const gallery = document.querySelector(".gallery");
   gallery.innerHTML = "";
-  console.log(gallery);
-  console.log(works);
+
   // Vider la galerie avant d'afficher les travaux filtrés
   while (gallery.firstChild) {
     gallery.removeChild(gallery.firstChild);
@@ -90,7 +87,6 @@ const displayWorksInGallery = (works) => {
   // Parcourir le tableau des projets
   works.forEach((work) => {
     // Création élément div pour le projet
-    console.log(work)
     const div = document.createElement("div");
     // Ajout de l'image du projet 
     div.innerHTML = `
@@ -174,7 +170,7 @@ const deleteWork = (id) => {
   })
     .then((response) => {
       // Traiter la réponse
-      console.log(response);
+  
       if(response.status < 400){
         // supprimer la photo de allWorks
         allWorks = allWorks.filter((work) => work.id != id);
@@ -242,7 +238,7 @@ const addWork = () => {
   })
     .then((response) => {
       // Traiter la réponse
-      console.log(response);
+  
       // Convertir la réponse en JSON
       return response.json();
     })
@@ -289,7 +285,6 @@ inputTitle.addEventListener('input', function(){
   validForm()
 })
 function validForm() {
-  console.log(inputTitle.value , selectCategory.value , input.files.length)
   const btnValidate = document.querySelector('.btn-validate')
   if (inputTitle.value !== '' && input.files.length > 0){
     btnValidate.removeAttribute('disabled')
@@ -321,7 +316,6 @@ form.addEventListener("submit", function(event) {
 });
 
 //fonction qui retourne 'true' si l'utilisateur est connecté
-console.log(localStorage.token);
 if (localStorage.token) {
   // cacher les filtres
   filter.style.display = 'none';
